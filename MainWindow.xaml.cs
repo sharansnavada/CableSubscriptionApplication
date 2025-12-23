@@ -24,45 +24,72 @@ namespace CableSubscriberApp
 
         private void LoadFilters()
         {
+            // STATUS
+            StatusFilter.Items.Clear();
             StatusFilter.Items.Add("All");
-            foreach (var s in _allSubscribers.Select(x => x.Status).Distinct().Where(x => !string.IsNullOrEmpty(x)))
+            foreach (var s in _allSubscribers.Select(x => x.Status)
+                                             .Distinct()
+                                             .Where(x => !string.IsNullOrEmpty(x)))
                 StatusFilter.Items.Add(s);
-
-            AreaFilter.Items.Add("All");
-            foreach (var a in _allSubscribers.Select(x => x.AreaName).Distinct().Where(x => !string.IsNullOrEmpty(x)))
-                AreaFilter.Items.Add(a);
-
-            CompanyFilter.Items.Add("All");
-            foreach (var c in _allSubscribers.Select(x => x.CompanyName).Distinct().Where(x => !string.IsNullOrEmpty(x)))
-                CompanyFilter.Items.Add(c);
-
             StatusFilter.SelectedIndex = 0;
-            AreaFilter.SelectedIndex = 0;
+
+            // COMPANY
+            CompanyFilter.Items.Clear();
+            CompanyFilter.Items.Add("All");
+            foreach (var c in _allSubscribers.Select(x => x.CompanyName)
+                                              .Distinct()
+                                              .Where(x => !string.IsNullOrEmpty(x)))
+                CompanyFilter.Items.Add(c);
             CompanyFilter.SelectedIndex = 0;
+
+            LoadAreaFilter("All");
+        }
+
+        private void LoadAreaFilter(string company)
+        {
+            AreaFilter.Items.Clear();
+            AreaFilter.Items.Add("All");
+
+            var areas = _allSubscribers
+                .Where(s => company == "All" || s.CompanyName == company)
+                .Select(s => s.AreaName)
+                .Distinct()
+                .Where(a => !string.IsNullOrEmpty(a));
+
+            foreach (var area in areas)
+                AreaFilter.Items.Add(area);
+
+            AreaFilter.SelectedIndex = 0;
+        }
+
+        private void CompanyFilter_SelectionChanged(object sender, RoutedEventArgs e)
+        {
+            var selectedCompany = CompanyFilter.SelectedItem?.ToString() ?? "All";
+            LoadAreaFilter(selectedCompany);
+            ApplyFilters(null, null);
         }
 
         private void ApplyFilters(object sender, RoutedEventArgs e)
         {
-            var searchText = SearchBox.Text?.ToLower() ?? "";
+            var search = SearchBox.Text?.ToLower() ?? "";
             var status = StatusFilter.SelectedItem?.ToString();
-            var area = AreaFilter.SelectedItem?.ToString();
             var company = CompanyFilter.SelectedItem?.ToString();
+            var area = AreaFilter.SelectedItem?.ToString();
 
             var filtered = _allSubscribers.Where(s =>
                 // SEARCH
                 (
-                    (s.SubscriberName ?? "").ToLower().Contains(searchText) ||
-                    (s.PhoneNumber1 ?? "").Contains(searchText) ||
-                    (s.PhoneNumber2 ?? "").Contains(searchText) ||
-                    (s.NickName ?? "").ToLower().Contains(searchText) ||
-                    s.RentAmount.ToString().Contains(searchText)
+                    (s.SubscriberName ?? "").ToLower().Contains(search) ||
+                    (s.PhoneNumber1 ?? "").Contains(search) ||
+                    (s.PhoneNumber2 ?? "").Contains(search) ||
+                    (s.NickName ?? "").ToLower().Contains(search)
                 )
                 // STATUS
                 && (status == "All" || s.Status == status)
-                // AREA
-                && (area == "All" || s.AreaName == area)
                 // COMPANY
                 && (company == "All" || s.CompanyName == company)
+                // AREA
+                && (area == "All" || s.AreaName == area)
             ).ToList();
 
             SubscriberGrid.ItemsSource = filtered;

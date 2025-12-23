@@ -37,9 +37,7 @@
                 </Grid.ColumnDefinitions>
 
                 <!-- SEARCH -->
-                <TextBlock Text="Search:"
-                           VerticalAlignment="Center"
-                           Margin="5"/>
+                <TextBlock Text="Search:" VerticalAlignment="Center" Margin="5"/>
                 <TextBox x:Name="SearchBox"
                          Grid.Column="1"
                          Height="28"
@@ -48,8 +46,7 @@
                          TextChanged="ApplyFilters"/>
 
                 <!-- STATUS -->
-                <TextBlock Text="Status:"
-                           Grid.Column="2"
+                <TextBlock Text="Status:" Grid.Column="2"
                            VerticalAlignment="Center"
                            Margin="15,5,5,5"/>
                 <ComboBox x:Name="StatusFilter"
@@ -58,23 +55,21 @@
                           Margin="5"
                           SelectionChanged="ApplyFilters"/>
 
-                <!-- AREA -->
-                <TextBlock Text="Area:"
-                           Grid.Column="4"
-                           VerticalAlignment="Center"
-                           Margin="15,5,5,5"/>
-                <ComboBox x:Name="AreaFilter"
-                          Grid.Column="5"
-                          Height="28"
-                          Margin="5"
-                          SelectionChanged="ApplyFilters"/>
-
                 <!-- COMPANY -->
-                <TextBlock Text="Company:"
-                           Grid.Column="6"
+                <TextBlock Text="Company:" Grid.Column="4"
                            VerticalAlignment="Center"
                            Margin="15,5,5,5"/>
                 <ComboBox x:Name="CompanyFilter"
+                          Grid.Column="5"
+                          Height="28"
+                          Margin="5"
+                          SelectionChanged="CompanyFilter_SelectionChanged"/>
+
+                <!-- AREA -->
+                <TextBlock Text="Area:" Grid.Column="6"
+                           VerticalAlignment="Center"
+                           Margin="15,5,5,5"/>
+                <ComboBox x:Name="AreaFilter"
                           Grid.Column="7"
                           Height="28"
                           Margin="5"
@@ -84,17 +79,10 @@
                 <StackPanel Grid.Column="8"
                             Orientation="Horizontal"
                             HorizontalAlignment="Right">
-                    <Button Content="New Subscriber"
-                            Margin="5"
-                            Click="NewSubscriber_Click"/>
-                    <Button Content="Edit Subscriber"
-                            Margin="5"
-                            Click="EditSubscriber_Click"/>
-                    <Button Content="Delete Subscriber"
-                            Margin="5"
-                            Click="DeleteSubscriber_Click"/>
+                    <Button Content="New Subscriber" Margin="5" Click="NewSubscriber_Click"/>
+                    <Button Content="Edit Subscriber" Margin="5" Click="EditSubscriber_Click"/>
+                    <Button Content="Delete Subscriber" Margin="5" Click="DeleteSubscriber_Click"/>
                 </StackPanel>
-
             </Grid>
         </Border>
 
