@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows;
 
@@ -7,7 +7,7 @@ namespace CableSubscriberApp
     public partial class MainWindow : Window
     {
         private readonly JsonDataService _dataService = new JsonDataService();
-        private List<Subscriber> _allSubscribers;
+        private ObservableCollection<Subscriber> _allSubscribers;
 
         public MainWindow()
         {
@@ -17,7 +17,7 @@ namespace CableSubscriberApp
 
         private void LoadData()
         {
-            _allSubscribers = _dataService.Load();
+            _allSubscribers = new ObservableCollection<Subscriber>(_dataService.Load());
 
             if (_allSubscribers.Count == 0)
             {
@@ -59,10 +59,12 @@ namespace CableSubscriberApp
             var dialog = new SubscriberDialog();
             if (dialog.ShowDialog() == true)
             {
-                dialog.Subscriber.Id = _allSubscribers.Count + 1;
+                dialog.Subscriber.Id = _allSubscribers.Any()
+                    ? _allSubscribers.Max(s => s.Id) + 1
+                    : 1;
+
                 _allSubscribers.Add(dialog.Subscriber);
                 _dataService.Save(_allSubscribers);
-                SubscriberGrid.ItemsSource = _allSubscribers;
             }
         }
 
@@ -74,7 +76,6 @@ namespace CableSubscriberApp
                 if (dialog.ShowDialog() == true)
                 {
                     _dataService.Save(_allSubscribers);
-                    SubscriberGrid.ItemsSource = _allSubscribers;
                 }
             }
         }
@@ -88,7 +89,6 @@ namespace CableSubscriberApp
                 {
                     _allSubscribers.Remove(selected);
                     _dataService.Save(_allSubscribers);
-                    SubscriberGrid.ItemsSource = _allSubscribers;
                 }
             }
         }

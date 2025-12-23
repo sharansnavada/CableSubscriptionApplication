@@ -22,6 +22,7 @@ namespace CableSubscriberApp
             StatusBox.Text = existing.Status;
             AreaBox.Text = existing.AreaName;
             CompanyBox.Text = existing.CompanyName;
+            AddressBox.Text = existing.Address;
         }
 
         private void Ok_Click(object sender, RoutedEventArgs e)
@@ -32,6 +33,7 @@ namespace CableSubscriberApp
             Subscriber.Status = StatusBox.Text;
             Subscriber.AreaName = AreaBox.Text;
             Subscriber.CompanyName = CompanyBox.Text;
+            Subscriber.Address = AddressBox.Text;
 
             DialogResult = true;
         }

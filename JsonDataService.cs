@@ -18,7 +18,7 @@ namespace CableSubscriberApp
                    ?? new List<Subscriber>();
         }
 
-        public void Save(List<Subscriber> subscribers)
+        public void Save(IEnumerable<Subscriber> subscribers)
         {
             var json = JsonConvert.SerializeObject(subscribers, Formatting.Indented);
             File.WriteAllText(FileName, json);
