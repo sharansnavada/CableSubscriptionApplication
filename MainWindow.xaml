@@ -2,17 +2,53 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="Subscriber List"
-        Height="600"
-        Width="1000">
+        Height="650"
+        Width="1200">
 
     <DockPanel>
-        <TextBox x:Name="SearchBox"
-                 Margin="10"
-                 TextChanged="SearchBox_TextChanged"
-                 ToolTip="Search Subscriber"/>
 
+        <!-- HEADER -->
+        <Border DockPanel.Dock="Top" Background="#D44A1C" Height="60">
+            <TextBlock Text="Subscriber List"
+                       Foreground="White"
+                       FontSize="22"
+                       VerticalAlignment="Center"
+                       Margin="20,0"/>
+        </Border>
+
+        <!-- TOOLBAR -->
+        <StackPanel DockPanel.Dock="Top"
+                    Orientation="Horizontal"
+                    Background="#EFEFEF"
+                    Margin="10">
+            <Button Content="New Subscriber" Click="NewSubscriber_Click" Margin="5"/>
+            <Button Content="Edit Subscriber" Click="EditSubscriber_Click" Margin="5"/>
+            <Button Content="Delete Subscriber" Click="DeleteSubscriber_Click" Margin="5"/>
+
+            <TextBox x:Name="SearchBox"
+                     Width="250"
+                     Margin="30,0,0,0"
+                     TextChanged="SearchBox_TextChanged"
+                     ToolTip="Search subscriber"/>
+        </StackPanel>
+
+        <!-- GRID -->
         <DataGrid x:Name="SubscriberGrid"
+                  AutoGenerateColumns="False"
+                  CanUserAddRows="False"
                   Margin="10"
-                  AutoGenerateColumns="True"/>
+                  SelectionMode="Single">
+
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Name" Binding="{Binding SubscriberName}" />
+                <DataGridTextColumn Header="Nick Name" Binding="{Binding NickName}" />
+                <DataGridTextColumn Header="Rent" Binding="{Binding RentAmount}" />
+                <DataGridTextColumn Header="Status" Binding="{Binding Status}" />
+                <DataGridTextColumn Header="Area" Binding="{Binding AreaName}" />
+                <DataGridTextColumn Header="Company" Binding="{Binding CompanyName}" />
+                <DataGridTextColumn Header="Address" Binding="{Binding Address}" />
+            </DataGrid.Columns>
+        </DataGrid>
+
     </DockPanel>
 </Window>
