@@ -3,12 +3,14 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="Subscriber List"
         Height="650"
-        Width="1300">
+        Width="1400">
 
     <DockPanel>
 
         <!-- HEADER -->
-        <Border DockPanel.Dock="Top" Background="#D44A1C" Height="60">
+        <Border DockPanel.Dock="Top"
+                Background="#D44A1C"
+                Height="60">
             <TextBlock Text="Subscriber List"
                        Foreground="White"
                        FontSize="22"
@@ -16,24 +18,87 @@
                        Margin="20,0"/>
         </Border>
 
-        <!-- TOOLBAR -->
-        <StackPanel DockPanel.Dock="Top"
-                    Orientation="Horizontal"
-                    Background="#EFEFEF"
-                    Margin="10">
+        <!-- FILTER BAR -->
+        <Border DockPanel.Dock="Top"
+                Background="#F5F5F5"
+                Padding="10">
 
-            <Button Content="New Subscriber" Click="NewSubscriber_Click" Margin="5"/>
-            <Button Content="Edit Subscriber" Click="EditSubscriber_Click" Margin="5"/>
-            <Button Content="Delete Subscriber" Click="DeleteSubscriber_Click" Margin="5"/>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="220"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="160"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="200"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="200"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
 
-            <TextBox x:Name="SearchBox"
-                     Width="260"
-                     Height="28"
-                     Margin="30,0,0,0"
-                     TextChanged="SearchBox_TextChanged"/>
-        </StackPanel>
+                <!-- SEARCH -->
+                <TextBlock Text="Search:"
+                           VerticalAlignment="Center"
+                           Margin="5"/>
+                <TextBox x:Name="SearchBox"
+                         Grid.Column="1"
+                         Height="28"
+                         Margin="5"
+                         VerticalContentAlignment="Center"
+                         TextChanged="ApplyFilters"/>
 
-        <!-- GRID -->
+                <!-- STATUS -->
+                <TextBlock Text="Status:"
+                           Grid.Column="2"
+                           VerticalAlignment="Center"
+                           Margin="15,5,5,5"/>
+                <ComboBox x:Name="StatusFilter"
+                          Grid.Column="3"
+                          Height="28"
+                          Margin="5"
+                          SelectionChanged="ApplyFilters"/>
+
+                <!-- AREA -->
+                <TextBlock Text="Area:"
+                           Grid.Column="4"
+                           VerticalAlignment="Center"
+                           Margin="15,5,5,5"/>
+                <ComboBox x:Name="AreaFilter"
+                          Grid.Column="5"
+                          Height="28"
+                          Margin="5"
+                          SelectionChanged="ApplyFilters"/>
+
+                <!-- COMPANY -->
+                <TextBlock Text="Company:"
+                           Grid.Column="6"
+                           VerticalAlignment="Center"
+                           Margin="15,5,5,5"/>
+                <ComboBox x:Name="CompanyFilter"
+                          Grid.Column="7"
+                          Height="28"
+                          Margin="5"
+                          SelectionChanged="ApplyFilters"/>
+
+                <!-- ACTION BUTTONS -->
+                <StackPanel Grid.Column="8"
+                            Orientation="Horizontal"
+                            HorizontalAlignment="Right">
+                    <Button Content="New Subscriber"
+                            Margin="5"
+                            Click="NewSubscriber_Click"/>
+                    <Button Content="Edit Subscriber"
+                            Margin="5"
+                            Click="EditSubscriber_Click"/>
+                    <Button Content="Delete Subscriber"
+                            Margin="5"
+                            Click="DeleteSubscriber_Click"/>
+                </StackPanel>
+
+            </Grid>
+        </Border>
+
+        <!-- DATA GRID -->
         <DataGrid x:Name="SubscriberGrid"
                   AutoGenerateColumns="False"
                   CanUserAddRows="False"
@@ -41,17 +106,18 @@
                   SelectionMode="Single">
 
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Name" Binding="{Binding SubscriberName}" Width="150"/>
+                <DataGridTextColumn Header="Name" Binding="{Binding SubscriberName}" Width="160"/>
                 <DataGridTextColumn Header="Phone 1" Binding="{Binding PhoneNumber1}" Width="120"/>
                 <DataGridTextColumn Header="Phone 2" Binding="{Binding PhoneNumber2}" Width="120"/>
                 <DataGridTextColumn Header="Nick Name" Binding="{Binding NickName}" Width="120"/>
                 <DataGridTextColumn Header="Rent" Binding="{Binding RentAmount}" Width="80"/>
                 <DataGridTextColumn Header="Status" Binding="{Binding Status}" Width="120"/>
-                <DataGridTextColumn Header="Area" Binding="{Binding AreaName}" Width="150"/>
-                <DataGridTextColumn Header="Company" Binding="{Binding CompanyName}" Width="150"/>
-                <DataGridTextColumn Header="Address" Binding="{Binding Address}" Width="200"/>
+                <DataGridTextColumn Header="Area" Binding="{Binding AreaName}" Width="160"/>
+                <DataGridTextColumn Header="Company" Binding="{Binding CompanyName}" Width="160"/>
+                <DataGridTextColumn Header="Address" Binding="{Binding Address}" Width="220"/>
             </DataGrid.Columns>
 
         </DataGrid>
+
     </DockPanel>
 </Window>

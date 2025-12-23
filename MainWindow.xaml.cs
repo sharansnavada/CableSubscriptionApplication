@@ -13,45 +13,59 @@ namespace CableSubscriberApp
         {
             InitializeComponent();
             LoadData();
+            LoadFilters();
         }
 
         private void LoadData()
         {
             _allSubscribers = new ObservableCollection<Subscriber>(_dataService.Load());
-
-            if (_allSubscribers.Count == 0)
-            {
-                _allSubscribers.Add(new Subscriber
-                {
-                    Id = 1,
-                    SubscriberName = "Gopi",
-                    NickName = "HANDI",
-                    RentAmount = 270,
-                    Status = "Active",
-                    AreaName = "Channappana Palya",
-                    CompanyName = "CHANNAPPANA PALYA",
-                    Address = ""
-                });
-
-                _dataService.Save(_allSubscribers);
-            }
-
             SubscriberGrid.ItemsSource = _allSubscribers;
         }
 
-        private void SearchBox_TextChanged(object sender, System.Windows.Controls.TextChangedEventArgs e)
+        private void LoadFilters()
         {
-            var text = SearchBox.Text.ToLower();
+            StatusFilter.Items.Add("All");
+            foreach (var s in _allSubscribers.Select(x => x.Status).Distinct().Where(x => !string.IsNullOrEmpty(x)))
+                StatusFilter.Items.Add(s);
 
-            SubscriberGrid.ItemsSource = _allSubscribers.Where(s =>
-                (s.SubscriberName ?? "").ToLower().Contains(text) ||
-                (s.NickName ?? "").ToLower().Contains(text) ||
-                s.RentAmount.ToString().Contains(text) ||
-                (s.Status ?? "").ToLower().Contains(text) ||
-                (s.AreaName ?? "").ToLower().Contains(text) ||
-                (s.CompanyName ?? "").ToLower().Contains(text) ||
-                (s.Address ?? "").ToLower().Contains(text)
+            AreaFilter.Items.Add("All");
+            foreach (var a in _allSubscribers.Select(x => x.AreaName).Distinct().Where(x => !string.IsNullOrEmpty(x)))
+                AreaFilter.Items.Add(a);
+
+            CompanyFilter.Items.Add("All");
+            foreach (var c in _allSubscribers.Select(x => x.CompanyName).Distinct().Where(x => !string.IsNullOrEmpty(x)))
+                CompanyFilter.Items.Add(c);
+
+            StatusFilter.SelectedIndex = 0;
+            AreaFilter.SelectedIndex = 0;
+            CompanyFilter.SelectedIndex = 0;
+        }
+
+        private void ApplyFilters(object sender, RoutedEventArgs e)
+        {
+            var searchText = SearchBox.Text?.ToLower() ?? "";
+            var status = StatusFilter.SelectedItem?.ToString();
+            var area = AreaFilter.SelectedItem?.ToString();
+            var company = CompanyFilter.SelectedItem?.ToString();
+
+            var filtered = _allSubscribers.Where(s =>
+                // SEARCH
+                (
+                    (s.SubscriberName ?? "").ToLower().Contains(searchText) ||
+                    (s.PhoneNumber1 ?? "").Contains(searchText) ||
+                    (s.PhoneNumber2 ?? "").Contains(searchText) ||
+                    (s.NickName ?? "").ToLower().Contains(searchText) ||
+                    s.RentAmount.ToString().Contains(searchText)
+                )
+                // STATUS
+                && (status == "All" || s.Status == status)
+                // AREA
+                && (area == "All" || s.AreaName == area)
+                // COMPANY
+                && (company == "All" || s.CompanyName == company)
             ).ToList();
+
+            SubscriberGrid.ItemsSource = filtered;
         }
 
         private void NewSubscriber_Click(object sender, RoutedEventArgs e)
@@ -60,11 +74,13 @@ namespace CableSubscriberApp
             if (dialog.ShowDialog() == true)
             {
                 dialog.Subscriber.Id = _allSubscribers.Any()
-                    ? _allSubscribers.Max(s => s.Id) + 1
+                    ? _allSubscribers.Max(x => x.Id) + 1
                     : 1;
 
                 _allSubscribers.Add(dialog.Subscriber);
                 _dataService.Save(_allSubscribers);
+                LoadFilters();
+                ApplyFilters(null, null);
             }
         }
 
@@ -76,6 +92,8 @@ namespace CableSubscriberApp
                 if (dialog.ShowDialog() == true)
                 {
                     _dataService.Save(_allSubscribers);
+                    LoadFilters();
+                    ApplyFilters(null, null);
                 }
             }
         }
@@ -89,6 +107,8 @@ namespace CableSubscriberApp
                 {
                     _allSubscribers.Remove(selected);
                     _dataService.Save(_allSubscribers);
+                    LoadFilters();
+                    ApplyFilters(null, null);
                 }
             }
         }
