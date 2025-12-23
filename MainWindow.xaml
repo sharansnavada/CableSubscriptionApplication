@@ -3,7 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="Subscriber List"
         Height="650"
-        Width="1200">
+        Width="1300">
 
     <DockPanel>
 
@@ -21,15 +21,16 @@
                     Orientation="Horizontal"
                     Background="#EFEFEF"
                     Margin="10">
+
             <Button Content="New Subscriber" Click="NewSubscriber_Click" Margin="5"/>
             <Button Content="Edit Subscriber" Click="EditSubscriber_Click" Margin="5"/>
             <Button Content="Delete Subscriber" Click="DeleteSubscriber_Click" Margin="5"/>
 
             <TextBox x:Name="SearchBox"
-                     Width="250"
+                     Width="260"
+                     Height="28"
                      Margin="30,0,0,0"
-                     TextChanged="SearchBox_TextChanged"
-                     ToolTip="Search subscriber"/>
+                     TextChanged="SearchBox_TextChanged"/>
         </StackPanel>
 
         <!-- GRID -->
@@ -40,15 +41,17 @@
                   SelectionMode="Single">
 
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Name" Binding="{Binding SubscriberName}" />
-                <DataGridTextColumn Header="Nick Name" Binding="{Binding NickName}" />
-                <DataGridTextColumn Header="Rent" Binding="{Binding RentAmount}" />
-                <DataGridTextColumn Header="Status" Binding="{Binding Status}" />
-                <DataGridTextColumn Header="Area" Binding="{Binding AreaName}" />
-                <DataGridTextColumn Header="Company" Binding="{Binding CompanyName}" />
-                <DataGridTextColumn Header="Address" Binding="{Binding Address}" />
+                <DataGridTextColumn Header="Name" Binding="{Binding SubscriberName}" Width="150"/>
+                <DataGridTextColumn Header="Phone 1" Binding="{Binding PhoneNumber1}" Width="120"/>
+                <DataGridTextColumn Header="Phone 2" Binding="{Binding PhoneNumber2}" Width="120"/>
+                <DataGridTextColumn Header="Nick Name" Binding="{Binding NickName}" Width="120"/>
+                <DataGridTextColumn Header="Rent" Binding="{Binding RentAmount}" Width="80"/>
+                <DataGridTextColumn Header="Status" Binding="{Binding Status}" Width="120"/>
+                <DataGridTextColumn Header="Area" Binding="{Binding AreaName}" Width="150"/>
+                <DataGridTextColumn Header="Company" Binding="{Binding CompanyName}" Width="150"/>
+                <DataGridTextColumn Header="Address" Binding="{Binding Address}" Width="200"/>
             </DataGrid.Columns>
-        </DataGrid>
 
+        </DataGrid>
     </DockPanel>
 </Window>

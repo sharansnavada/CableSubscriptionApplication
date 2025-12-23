@@ -12,6 +12,8 @@ namespace CableSubscriberApp
         private string _areaName;
         private string _companyName;
         private string _address;
+        private string _phoneNumber1;
+        private string _phoneNumber2;
 
         public int Id
         {
@@ -61,11 +63,20 @@ namespace CableSubscriberApp
             set { _address = value; OnPropertyChanged(nameof(Address)); }
         }
 
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        private void OnPropertyChanged(string propertyName)
+        public string PhoneNumber1
         {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+            get => _phoneNumber1;
+            set { _phoneNumber1 = value; OnPropertyChanged(nameof(PhoneNumber1)); }
         }
+
+        public string PhoneNumber2
+        {
+            get => _phoneNumber2;
+            set { _phoneNumber2 = value; OnPropertyChanged(nameof(PhoneNumber2)); }
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+        private void OnPropertyChanged(string name)
+            => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
     }
 }
