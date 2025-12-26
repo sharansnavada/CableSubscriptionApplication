@@ -24,6 +24,7 @@ namespace CableSubscriberApp
             StatusBox.Text = existing.Status;
             AreaBox.Text = existing.AreaName;
             CompanyBox.Text = existing.CompanyName;
+            SetTopBoxBox.Text = existing.SetTopBoxNumber;
         }
 
         private void Ok_Click(object sender, RoutedEventArgs e)
@@ -36,6 +37,7 @@ namespace CableSubscriberApp
             Subscriber.Status = StatusBox.Text;
             Subscriber.AreaName = AreaBox.Text;
             Subscriber.CompanyName = CompanyBox.Text;
+            Subscriber.SetTopBoxNumber = SetTopBoxBox.Text;
 
             DialogResult = true;
         }

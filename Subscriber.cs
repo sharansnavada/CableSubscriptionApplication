@@ -14,6 +14,7 @@ namespace CableSubscriberApp
         private string _address;
         private string _phoneNumber1;
         private string _phoneNumber2;
+        private string _setTopBoxNumber;
 
         public int Id
         {
@@ -73,6 +74,12 @@ namespace CableSubscriberApp
         {
             get => _phoneNumber2;
             set { _phoneNumber2 = value; OnPropertyChanged(nameof(PhoneNumber2)); }
+        }
+
+        public string SetTopBoxNumber
+        {
+            get => _setTopBoxNumber;
+            set { _setTopBoxNumber = value; OnPropertyChanged(nameof(SetTopBoxNumber)); }
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

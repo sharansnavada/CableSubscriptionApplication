@@ -98,6 +98,7 @@
                 <DataGridTextColumn Header="Phone 1" Binding="{Binding PhoneNumber1}" Width="120"/>
                 <DataGridTextColumn Header="Phone 2" Binding="{Binding PhoneNumber2}" Width="120"/>
                 <DataGridTextColumn Header="Nick Name" Binding="{Binding NickName}" Width="120"/>
+                <DataGridTextColumn Header="Set Top Box" Binding="{Binding SetTopBoxNumber}" Width="140"/>
                 <DataGridTextColumn Header="Rent" Binding="{Binding RentAmount}" Width="80"/>
                 <DataGridTextColumn Header="Status" Binding="{Binding Status}" Width="120"/>
                 <DataGridTextColumn Header="Area" Binding="{Binding AreaName}" Width="160"/>

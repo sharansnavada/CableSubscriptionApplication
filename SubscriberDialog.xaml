@@ -22,6 +22,7 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
@@ -48,6 +49,9 @@
 
         <TextBlock Text="Company" Grid.Row="7" Grid.Column="0"/>
         <TextBox x:Name="CompanyBox" Grid.Row="7" Grid.Column="1"/>
+
+        <TextBlock Text="Set Top Box No" Grid.Row="8" Grid.Column="0"/>
+        <TextBox x:Name="SetTopBoxBox" Grid.Row="8" Grid.Column="1"/>
 
         <StackPanel Grid.Row="8"
                     Grid.ColumnSpan="2"
