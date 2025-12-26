@@ -52,6 +52,13 @@ class Program
                 cleanName = Regex.Replace(cleanName, @"[\/\-,]+", " ");
                 cleanName = Regex.Replace(cleanName, @"\s+", " ").Trim();
 
+                // ✅ SET-TOP BOX HANDLING (ONLY NEW LOGIC)
+                string rawSetTopBox = row[6]?.ToString() ?? "";
+                string digitsOnly = Regex.Replace(rawSetTopBox, @"\D", "");
+                string setTopBoxNumber = digitsOnly.Length >= 10
+                    ? digitsOnly.Substring(0, 10)
+                    : "";
+
                 subscribers.Add(new
                 {
                     Id = id++,
@@ -63,6 +70,10 @@ class Program
                     Status = row[3]?.ToString()?.Trim(),
                     AreaName = row[4]?.ToString()?.Trim(),
                     CompanyName = row[5]?.ToString()?.Trim(),
+
+                    // ✅ NEW FIELD
+                    SetTopBoxNumber = setTopBoxNumber,
+
                     Address = ""
                 });
             }
@@ -73,7 +84,7 @@ class Program
             JsonConvert.SerializeObject(subscribers, Formatting.Indented)
         );
 
-        Console.WriteLine("✅ JSON created successfully (phones extracted correctly)");
+        Console.WriteLine("✅ JSON created successfully (set-top box handled)");
         Console.ReadLine();
     }
 }
